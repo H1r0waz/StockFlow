@@ -100,7 +100,7 @@ pattern review, not an exhaustive secret-scanner guarantee. Final publication
 checks and remote revision are recorded at closure.
 
 Repository: [H1r0waz/StockFlow](https://github.com/H1r0waz/StockFlow), public,
-created without auto-initialization. Original local main remains unchanged; the authorized public copy uses a parentless noreply commit on local codex/public-release and remote main. Source trees are compared for equality. Original private-history commits are not pushed again; GitHub email privacy settings stay enabled.
+created without auto-initialization. Original local main remains unchanged; the authorized public copy uses fresh noreply history rooted in a parentless commit on local codex/public-release and remote main. Source trees are compared for equality. Original private-history commits are not pushed again; GitHub email privacy settings stay enabled.
 No force-push is authorized or used.
 
 The selected architecture and current free-plan limits are documented with
@@ -151,3 +151,16 @@ create a dedicated StockFlow project/database and runtime role, apply migrations
 seed fictional data, then create the Free Render service with the exact origin
 and restricted runtime secret. Perform all public acceptance checks before
 declaring Phase 12 complete. No commercial production-readiness verdict is made.
+
+## Publication privacy follow-up
+
+GitHub rejected the original push with GH007 but retained commit objects that
+were anonymously discoverable through its commit API. The initial repository
+was made private and renamed StockFlow-private-history-20261017 without deleting
+its data. A new independent public StockFlow repository was created; only the
+authorized noreply copy was pushed. Anonymous checks then returned 422 for the
+original development commits and 404 for the private archive. This is a
+point-in-time containment check, not proof that nobody accessed the author email
+during the earlier interval. Original local history and GitHub email privacy
+settings remain preserved. Public and local commit identities intentionally differ;
+their source trees are checked for equality.
