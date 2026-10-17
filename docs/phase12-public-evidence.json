@@ -1,7 +1,7 @@
 {
   "date": "2026-10-17",
   "base": "https://stockflow-demo-qsb3.onrender.com",
-  "sourceRevision": "1ed9e3d1eed2434f1929d6a2a2ca3518f0e5fd61",
+  "sourceRevision": "423e9753036aa806fa24df1eb3f423bc6224e47e",
   "httpChecks": [
     {
       "name": "/api/health",
@@ -257,7 +257,9 @@
     ],
     "purchaseOrderBrowser": {
       "id": "02133959-6a41-4f35-83f5-a322309db2b0",
-      "createdSentPartialTotal": true
+      "createdSentPartial": true,
+      "totalReceivingBrowserConfirmed": false,
+      "correction": "Scoped post-deploy HTTP check confirms PARTIALLY_RECEIVED, one remaining. Earlier generic Fully received DOM matched another existing order, not this order."
     },
     "reportsViewed": true,
     "csvDownload": "Server export200 observed in Render logs; local download completion unverified after browser interruption"
@@ -343,5 +345,31 @@
     "capturedAt": "2026-10-17T22:05:21.602Z",
     "sha256": "91ed8ad6a7d75bc5bec5685ac5d62aa7f67b8c519e5e6467550b9bdfe2405a92",
     "scope": "Raw viewport screenshot of isolated fictional QA inventory, not Nova dataset or local Phase11 capture"
+  },
+  "tenantResourceFilters": {
+    "executedAt": "2026-10-17T22:10:28.673Z",
+    "ownOrganizationPathWithForeignProductRead": 404,
+    "ownOrganizationPathWithForeignProductPatch": 404,
+    "ownOrganizationPathWithForeignOrderRead": 404
+  },
+  "initialDeployedCodeRevision": "1ed9e3d1eed2434f1929d6a2a2ca3518f0e5fd61",
+  "serviceReplacement": {
+    "executedAt": "2026-10-17T22:12:59.357Z",
+    "deployedCommit": "423e9753036aa806fa24df1eb3f423bc6224e47e",
+    "deployId": "dep-db9v4deq1p3s739n38qg",
+    "health": 200,
+    "ready": 200,
+    "login": true,
+    "qaBalances": ["6.000000", "10.000000"],
+    "browserOrderStillPartiallyReceived": true,
+    "logout": 204,
+    "scope": "Authenticated persisted data after actual Render service replacement; not preservation of the same pre-restart cookie"
+  },
+  "cloudSchemaDiff": {
+    "executedAt": "2026-10-17T22:12:45.843Z",
+    "status": 0,
+    "signal": null,
+    "output": "No difference detected.\n\n\nLoaded Prisma config from apps\\api\\prisma.config.ts.\n\n",
+    "scope": "Read-only Prisma-supported schema objects; custom trigger definitions not compared"
   }
 }

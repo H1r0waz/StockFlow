@@ -6,7 +6,7 @@ Date: 2026-10-17, America/Buenos_Aires. Project SC-PROJ-STOCKFLOW.
 
 Live demo: [StockFlow](https://stockflow-demo-qsb3.onrender.com).
 Source: [H1r0waz/StockFlow](https://github.com/H1r0waz/StockFlow).
-Deployed code revision: 1ed9e3d1eed2434f1929d6a2a2ca3518f0e5fd61.
+Current deployed revision: 423e9753036aa806fa24df1eb3f423bc6224e47e.
 See [current public evidence](PHASE12_PUBLIC_VERIFICATION.md) for the authoritative
 provider IDs, migrations, actual HTTPS/API/browser results, recovery drill and gaps.
 The preparation and publication history below is retained; its earlier pending
