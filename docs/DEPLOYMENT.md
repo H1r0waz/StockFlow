@@ -1,12 +1,14 @@
 # Public demo deployment
 
-Project: `SC-PROJ-STOCKFLOW`. Prepared 2026-10-17. **Status: PENDING public deployment and verification.** This is an operational plan; it does not establish that resources, URLs, grants, backups or public journeys already exist. See [Phase 12 evidence](PHASE12_VERIFICATION.md) for executed results and the exact deployed revision.
+Project: `SC-PROJ-STOCKFLOW`. Prepared 2026-10-17. **Status: public portfolio demo deployed; scoped acceptance verified.** Live URL: [StockFlow](https://stockflow-demo-qsb3.onrender.com). Remaining unverified operational checks are explicit in the Phase 12 report. See [Phase 12 evidence](PHASE12_VERIFICATION.md) for executed results and the exact deployed revision.
 
 ## Architecture decision
 
 Use one Render Free Node web service to serve the built Vite frontend and Express `/api` under one HTTPS origin. PostgreSQL is a separate, dedicated managed database. This keeps the existing session-cookie architecture, avoids a second frontend deployment and removes cross-site cookie dependencies. Vercel is unnecessary for this version. This is a portfolio demo, not a commercial availability commitment.
 
-Neon Free is the user-selected database because Render Free Postgres expires. Neon access, selected region, actual PostgreSQL version, connection allowance and project creation remain **PENDING**. Match application/database regions where possible. Record actual provider IDs and regions in the Phase 12 report without connection strings. “Bruno's workspace” is the user-confirmed Render workspace; confirmation does not establish that a service has been created.
+Neon Free is the user-selected database because Render Free Postgres expires. On 2026-10-17, the authenticated Chrome console created the dedicated `stockflow-demo` project (`wandering-snow-13740393`), production branch `br-patient-star-b7j4953l`, database `stockflow_public_demo`, AWS N. Virginia (`us-east-1`). The server reports PostgreSQL 18.6. The console confirms Free, 1 GB storage, 100 compute hours, up to 2 CU and six-hour history. The active compute reports max_connections=901; this is a server setting, not a promise of 901 usable application connections. Only PostgreSQL was enabled. Match the application region to Virginia. “Bruno's workspace” is the user-confirmed Render workspace; StockFlow service srv-db9uqm7btjjs73d4ruq0 now runs on Free in Virginia, auto-deploy off, health path /api/ready.
+
+The current Render workspace billing screen confirms Hobby, no card on file, $0 accrued/projected charges, and a $0 monthly pipeline spend limit that stops builds after included minutes run out. Observed shared usage: 26.08/750 free hours, 91 MB/5 GB bandwidth and 21/500 pipeline minutes. These are a time-specific account snapshot; recheck before provisioning if the workspace changes. No billing setting was modified.
 
 Provider documentation checked 2026-10-17:
 
@@ -18,7 +20,7 @@ Provider documentation checked 2026-10-17:
 
 Sources: [Render Free](https://render.com/docs/free), [Neon plans](https://neon.com/docs/introduction/plans). Older indexed Neon pages mention 0.5 GB; the current plan page above states 1 GB. Recheck the selected account before provisioning.
 
-Select **Free**, no paid upgrades, disks, cron jobs or ancillary services. A Free Render compute instance alone does not guarantee a zero bill: bandwidth/build overages can be charged when a payment method exists. Inspect workspace allowances and billing settings; do not authorize supplementary charges. If an enforceable no-cost configuration is unavailable, pause resource creation. [Render billing FAQ](https://render.com/docs/faq).
+Selected **Free**, no paid upgrades, disks, cron jobs or ancillary services. A Free Render compute instance alone does not guarantee a zero bill: bandwidth/build overages can be charged when a payment method exists. Inspect workspace allowances and billing settings; do not authorize supplementary charges. If an enforceable no-cost configuration is unavailable, pause resource creation. [Render billing FAQ](https://render.com/docs/faq).
 
 ## Build and service configuration
 

@@ -143,7 +143,5 @@ pinned TLS cloud target, project confirmation and a database marker; original
 local seed/reset guards remain intact. No public reset endpoint exists.
 
 The explicit runtime grants are verified locally with a non-owner temporary role,
-including ordinary writes and absent DDL/history-edit privileges. Cloud role
-installation, real HTTPS/proxy/IP behavior and public tenant isolation remain
-NO VERIFICADO until executed. See [Phase 12 evidence](PHASE12_VERIFICATION.md),
+including ordinary writes and absent DDL/history-edit privileges. Cloud role installation and forbidden SQL checks, public HTTPS/Secure cookies/CSRF/Origin/CORS and actual cross-tenant IDs passed. Forged forwarded protocol was rejected at ingress; full IP-throttling spoofing/topology coverage, provider PITR and distributed security remain NO VERIFICADO. See [Phase 12 evidence](PHASE12_VERIFICATION.md),
 [deployment](DEPLOYMENT.md) and [recovery](PRODUCTION_RUNBOOK.md).

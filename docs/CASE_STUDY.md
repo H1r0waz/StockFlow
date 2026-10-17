@@ -1,6 +1,6 @@
 # StockFlow — explaining every stock change
 
-StockFlow is a portfolio inventory and purchasing application for small and medium businesses. It combines an operational interface with a deliberately strict transaction model. The fictional Distribuidora Nova scenario shows the workflow locally; no real company, customer outcome or public deployment is claimed.
+StockFlow is a portfolio inventory and purchasing application for small and medium businesses. It combines an operational interface with a deliberately strict transaction model. The fictional Distribuidora Nova scenario is available in a [public portfolio demo](https://stockflow-demo-qsb3.onrender.com); no real company or customer outcome is claimed.
 
 ## The problem
 
@@ -56,11 +56,11 @@ The batch, durable ImportJob and safe audit commit together. Product imports mat
 
 The API uses scrypt password derivation, opaque hashed sessions, HttpOnly cookies, Origin/CSRF checks, live role checks, bounded requests and per-process abuse limits. Business audit uses safe field allowlists and commits with its operation; contacts, credentials, raw files and free-form notes are excluded from its state payloads. API errors avoid exposing SQL or stack traces.
 
-These controls were reviewed and tested locally. They do not constitute a penetration test, compliance certification or administrator-proof audit. Real TLS/proxy configuration, distributed limits, least-privilege production SQL roles, retention, backups and restore rehearsal remain deployment work. See the full [security model](SECURITY.md).
+These controls were reviewed and tested locally. They do not constitute a penetration test, compliance certification or administrator-proof audit. Phase 12 verifies public HTTPS/authentication and tenant boundaries, restricted runtime SQL permissions and restoration of a cloud dump into a fresh local database. Distributed limits, complete ingress/IP analysis, retention and provider PITR/cloud failover remain outside the executed evidence. See the full [security model](SECURITY.md).
 
 ## Demonstration and evidence
 
-The isolated Distribuidora Nova dataset lets a visitor follow the inventory and purchasing cycle with fictional OWNER, ADMIN and MEMBER accounts. Seed/reset boundaries and the suggested visit are documented in [DEMO.md](DEMO.md). It is a local product demonstration, not production data or evidence of customer use.
+The isolated Distribuidora Nova dataset lets a visitor follow the inventory and purchasing cycle with fictional OWNER, ADMIN and MEMBER accounts. Seed/reset boundaries and the suggested visit are documented in [DEMO.md](DEMO.md). It is a public portfolio demonstration with a reproducible local setup, using fictional data and no evidence of customer use.
 
 Verification combines pure API tests, component tests, real PostgreSQL tests and authenticated Playwright journeys. Concurrency cases use independent requests and connections; rollback cases inject failure and check that partial business effects do not commit. Tenant, role, decimal, direct-SQL guard and malformed-file cases complement the happy paths.
 
@@ -72,4 +72,4 @@ The implemented application connects stock reads to their underlying commands, l
 
 Organization-level serialization deliberately favors consistency and a small coordination model over maximum write throughput. Offset pages can shift during concurrent writes. Database owners can bypass triggers, and pending import previews are invalidated by an API restart. Sustained production load, broad device/assistive-technology compatibility and production infrastructure have not been established by the local evidence.
 
-Phase 12 prepares one Node service serving the compiled frontend and API under the same HTTPS origin, with a separate managed PostgreSQL database. Production options cover bounded readiness, safe request IDs/logs, explicit proxy trust, public-demo registration restrictions and a restricted runtime SQL role. Local execution is recorded in [Phase 12 evidence](PHASE12_VERIFICATION.md); public deployment and provider recovery are pending. This case study does not claim a verified live URL, adoption, cost savings or a production capacity benchmark.
+Phase 12 deploys one Render Free Node service serving the compiled frontend and API under the same [HTTPS origin](https://stockflow-demo-qsb3.onrender.com), with a separate Neon Free PostgreSQL 18.6 database in Virginia. Production options cover bounded readiness, safe request IDs/logs, explicit proxy trust, public-demo registration restrictions and a restricted runtime SQL role. Executed local and public checks, source revision, timings, cloud dump recovery and explicit gaps are recorded in [Phase 12 evidence](PHASE12_VERIFICATION.md). This case study does not claim adoption, cost savings, provider failover validation or commercial production capacity.

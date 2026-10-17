@@ -4,7 +4,7 @@
 
 StockFlow is a multi-tenant inventory and purchasing application for small and medium businesses. It connects warehouse stock, movement history, supplier orders and physical receipts so an operator can understand what changed and why. Its technical focus is consistency under competing operations: exact quantities, nonnegative balances, atomic transfers and receipts, and durable replay results.
 
-This is a portfolio project with fictional data. Phase 12 prepares a public demo; no live URL is verified yet. It does not represent a real distributor. Canonical identity: `SC-PROJ-STOCKFLOW`.
+This is a portfolio project with fictional data. [Open the public demo](https://stockflow-demo-qsb3.onrender.com) on Render Free with Neon Free PostgreSQL. Free hosting can sleep; allow extra time on first access. It does not represent a real distributor. Canonical identity: `SC-PROJ-STOCKFLOW`.
 
 ![StockFlow operational dashboard with fictional demo data](docs/screenshots/dashboard.png)
 
@@ -133,6 +133,6 @@ Earlier `docs/PHASE*_VERIFICATION.md` files preserve the evidence and limitation
 
 ## Current scope and limits
 
-Phase 11 completed the local fictional demo and commercial presentation. Phase 12 adds same-origin deployment support, public-demo registration policy, readiness, request logging and restricted SQL grants. Public deployment is pending authorized Neon access and actual cloud verification. Source repository: [H1r0waz/StockFlow](https://github.com/H1r0waz/StockFlow). See [deployment](docs/DEPLOYMENT.md), [recovery runbook](docs/PRODUCTION_RUNBOOK.md) and [Phase 12 evidence](docs/PHASE12_VERIFICATION.md).
+Phase 11 completed the local fictional demo and commercial presentation. Phase 12 adds same-origin deployment support, public-demo registration policy, readiness, request logging and restricted SQL grants. The [public demo](https://stockflow-demo-qsb3.onrender.com) has been deployed and its HTTPS authentication, inventory/purchasing operations, CSV, tenant boundaries and restricted SQL role checked. See the exact public verification scope and remaining limits below. Source repository: [H1r0waz/StockFlow](https://github.com/H1r0waz/StockFlow). See [deployment](docs/DEPLOYMENT.md), [recovery runbook](docs/PRODUCTION_RUNBOOK.md) and [Phase 12 evidence](docs/PHASE12_VERIFICATION.md).
 
-Production TLS/proxy behavior, least-privilege SQL roles, backup/restore, retention, sustained workload capacity and distributed limiting still require their own design and verification. Password reset, email verification, MFA, external notifications and financial valuation are outside this release. Audit does not resist a privileged database owner. Pending import previews and browser-held retry keys have documented restart/reload limits. Read [SECURITY.md](docs/SECURITY.md) before treating the local demo as a deployment plan.
+Public HTTPS/cookie/CSRF/Origin checks and restricted SQL privileges passed; an actual cloud dump was restored into isolated local PostgreSQL. Provider PITR/cloud failover, full proxy/IP spoofing coverage, retention, sustained workload capacity and distributed limiting remain unverified. Password reset, email verification, MFA, external notifications and financial valuation are outside this release. Audit does not resist a privileged database owner. Pending import previews and browser-held retry keys have documented restart/reload limits. Read [SECURITY.md](docs/SECURITY.md) before treating the local demo as a deployment plan.

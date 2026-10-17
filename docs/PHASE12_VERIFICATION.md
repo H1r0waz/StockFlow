@@ -1,16 +1,17 @@
-# Phase 12 verification — deployment preparation
+# Phase 12 verification — public portfolio deployment
 
-Date: 2026-10-17, America/Buenos_Aires. Baseline:
-`0c169357e2bc9b103f3d8beaa82c081bf3d36680`, main, initially clean.
+Date: 2026-10-17, America/Buenos_Aires. Project SC-PROJ-STOCKFLOW.
 
-**PARCIAL — public deployment acceptance remains pending.**
-The user selected Neon Free, confirmed Bruno's Render workspace and authorized
-a public H1r0waz/StockFlow repository. After GH007 rejected publication of a protected private author email, the user explicitly authorized a fresh public history with a noreply identity; original history stays intact on local main. No cloud database,
-Render service, public application URL or deployed revision is verified.
-The browser tool reports **Local browser use is disabled in Work settings**;
-there is no available Neon connector or authorized Neon API key. Selecting
-“enable browser” does not itself change that technical setting. No access
-restriction was bypassed, paid resource created or unrelated project changed.
+**PARCIAL: public demo and core acceptance verified; extended operational checks remain open.**
+
+Live demo: [StockFlow](https://stockflow-demo-qsb3.onrender.com).
+Source: [H1r0waz/StockFlow](https://github.com/H1r0waz/StockFlow).
+Deployed code revision: 1ed9e3d1eed2434f1929d6a2a2ca3518f0e5fd61.
+See [current public evidence](PHASE12_PUBLIC_VERIFICATION.md) for the authoritative
+provider IDs, migrations, actual HTTPS/API/browser results, recovery drill and gaps.
+The preparation and publication history below is retained; its earlier pending
+provider states are superseded by the dated public report. No commercial production
+readiness claim is made.
 
 ## Implemented and reviewed
 
@@ -110,23 +111,23 @@ overage controls before a build. Neon Free is selected; Render's expiring
 PostgreSQL fallback was not selected. No paid add-on, disk, cron, keep-alive,
 new observability stack or cross-project credential is used.
 
-## Public acceptance — NO VERIFICADO
+## Historical acceptance checklist before cloud continuation — superseded
 
-| Required evidence                                                           | Current state                  |
-| --------------------------------------------------------------------------- | ------------------------------ |
-| Public frontend/API/database and URL                                        | NO VERIFICADO; not provisioned |
-| Actual region, PostgreSQL version, project quotas                           | NO VERIFICADO                  |
-| Cloud migration status/drift and public seed                                | NO VERIFICADO                  |
-| Live runtime role/grants and TLS DB connection                              | NO VERIFICADO                  |
-| HTTPS, ingress/IP/proxy/HSTS, browser Secure cookies                        | NO VERIFICADO                  |
-| Public login/session/logout, CSRF/Origin/CORS                               | NO VERIFICADO                  |
-| Public inventory, transfer, supplier, order, receiving, CSV/report workflow | NO VERIFICADO                  |
-| Actual cross-tenant IDs and public browser E2E                              | NO VERIFICADO                  |
-| Public responsive / Chrome / Edge                                           | NO VERIFICADO                  |
-| Public first load/login/dashboard/inventory/report warm timings             | NO VERIFICADO                  |
-| Confirmed idle cold start                                                   | NO VERIFICADO                  |
-| Provider backup/PITR/restore execution                                      | NO VERIFICADO                  |
-| Deployed commit                                                             | None                           |
+| Required evidence                                                           | Current state                                                                 |
+| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| Public frontend/API/database and URL                                        | PARTIAL: Neon database created; application URL absent                        |
+| Actual region, PostgreSQL version, project quotas                           | Neon Free / Virginia / PostgreSQL 18.6 observed; connection allowance pending |
+| Cloud migration status/drift and public seed                                | NO VERIFICADO                                                                 |
+| Live runtime role/grants and TLS DB connection                              | NO VERIFICADO                                                                 |
+| HTTPS, ingress/IP/proxy/HSTS, browser Secure cookies                        | NO VERIFICADO                                                                 |
+| Public login/session/logout, CSRF/Origin/CORS                               | NO VERIFICADO                                                                 |
+| Public inventory, transfer, supplier, order, receiving, CSV/report workflow | NO VERIFICADO                                                                 |
+| Actual cross-tenant IDs and public browser E2E                              | NO VERIFICADO                                                                 |
+| Public responsive / Chrome / Edge                                           | NO VERIFICADO                                                                 |
+| Public first load/login/dashboard/inventory/report warm timings             | NO VERIFICADO                                                                 |
+| Confirmed idle cold start                                                   | NO VERIFICADO                                                                 |
+| Provider backup/PITR/restore execution                                      | NO VERIFICADO                                                                 |
+| Deployed commit                                                             | None                                                                          |
 
 Existing Phase 11 screenshots remain real local captures with original
 provenance. Regenerate affected screenshots from the public release after it
@@ -145,12 +146,43 @@ public data/SQL grants and deployment/recovery documentation. The principal
 integrated changes, ran combined verification, checked publication and remains
 the sole Second Brain custodian. No persistent agent-profile execution is claimed.
 
-Next required action: enable authorized browser access for the user-selected
-Neon account (or provide an approved secure API path), verify Free/account quotas,
-create a dedicated StockFlow project/database and runtime role, apply migrations,
-seed fictional data, then create the Free Render service with the exact origin
-and restricted runtime secret. Perform all public acceptance checks before
-declaring Phase 12 complete. No commercial production-readiness verdict is made.
+Next required action: complete the existing Neon target's migrations, runtime
+role and fictional seed, then create the Free Render service with the exact
+origin and restricted runtime secret. Browser access and resource creation were
+verified during the continuation below. Perform all public acceptance checks
+before declaring Phase 12 complete. No commercial production-readiness verdict
+is made.
+
+## Initial browser and Neon continuation — 2026-10-17 (historical diagnostic snapshot)
+
+- Chrome extension access works; authenticated Neon and Render consoles were
+  used without connecting another account or installing software.
+- Created only Neon Free project `stockflow-demo`, ID
+  `wandering-snow-13740393`, production branch `br-patient-star-b7j4953l`,
+  database `stockflow_public_demo`, region AWS `us-east-1` (N. Virginia).
+  Other optional services remained disabled. PostgreSQL reports 18.6.
+- Confirmed Free in the console: 1 GB storage, 100 compute hours, up to 2 CU,
+  ten branches and six-hour restore history. Restore execution is not verified.
+- Read-only Node/pg connection succeeds over IPv4 with TLS 1.3, certificate
+  authorization true and `sslmode=verify-full`. Server-side `pg_stat_ssl`
+  describes the proxy-to-backend connection, so it is not used as proof of
+  client-side transport encryption.
+- Render workspace `tea-db42gkub7d7c73a4fo90`: Hobby, no card on file,
+  $0 accrued/projected charges, pipeline monthly spend limit $0. Observed
+  shared usage: 26.08/750 free hours, 91 MB/5 GB bandwidth, 21/500 pipeline
+  minutes. No billing changes or paid resources.
+- Prisma migration engine returns P1001. During the attempt, Windows reports
+  the schema-engine process in `SynSent` to a Neon IPv6 address on port 5432;
+  Node connects to the same endpoint over IPv4. `verify-full` is not a
+  documented Prisma schema-engine sslmode; the administrative Prisma-only
+  URL uses `sslmode=require&sslaccept=strict`, retaining certificate validation.
+  See [Prisma PostgreSQL URL options](https://www.prisma.io/docs/orm/v7/core-concepts/supported-databases/postgresql).
+- The inspected target still has zero public tables and no runtime role.
+  No migration, seed or application deployment is claimed. No global network,
+  DNS, firewall or TLS-validation setting was changed; no Docker or installed
+  WSL environment was available. Local approved regression was not repeated.
+- Owner credentials are stored only in ignored local administrative cache;
+  no connection string appears in documentation, public source or vault.
 
 ## Publication privacy follow-up
 

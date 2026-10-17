@@ -1,0 +1,347 @@
+{
+  "date": "2026-10-17",
+  "base": "https://stockflow-demo-qsb3.onrender.com",
+  "sourceRevision": "1ed9e3d1eed2434f1929d6a2a2ca3518f0e5fd61",
+  "httpChecks": [
+    {
+      "name": "/api/health",
+      "passed": true,
+      "ms": 330
+    },
+    {
+      "name": "/api/ready",
+      "passed": true,
+      "ms": 283
+    },
+    {
+      "name": "SPA route refresh and CSP",
+      "passed": true
+    },
+    {
+      "name": "HSTS over HTTPS",
+      "passed": true
+    },
+    {
+      "name": "API404 remains JSON",
+      "passed": true
+    },
+    {
+      "name": "Server replaces request ID",
+      "passed": true
+    },
+    {
+      "name": "Ingress ignores forged forwarded protocol for HTTPS/HSTS",
+      "passed": true
+    },
+    {
+      "name": "No cross-origin CORS grant",
+      "passed": true
+    },
+    {
+      "name": "Public registration disabled",
+      "passed": true
+    },
+    {
+      "name": "Public real-DB login",
+      "passed": true,
+      "ms": 3537
+    },
+    {
+      "name": "Secure HttpOnly Lax cookie",
+      "passed": true
+    },
+    {
+      "name": "Authenticated session",
+      "passed": true
+    },
+    {
+      "name": "Missing CSRF denied",
+      "passed": true
+    },
+    {
+      "name": "Bad Origin denied",
+      "passed": true
+    },
+    {
+      "name": "Logout",
+      "passed": true
+    },
+    {
+      "name": "Session revoked",
+      "passed": true
+    },
+    {
+      "name": "HTTP redirects HTTPS",
+      "passed": true
+    }
+  ],
+  "journeyChecks": [
+    {
+      "name": "QA HTTPS login",
+      "passed": true
+    },
+    {
+      "name": "QA HTTPS login",
+      "passed": true
+    },
+    {
+      "name": "POST categories ",
+      "passed": true
+    },
+    {
+      "name": "POST products ",
+      "passed": true
+    },
+    {
+      "name": "POST warehouses ",
+      "passed": true
+    },
+    {
+      "name": "POST warehouses ",
+      "passed": true
+    },
+    {
+      "name": "POST inventory/receipts ",
+      "passed": true
+    },
+    {
+      "name": "POST inventory/issues ",
+      "passed": true
+    },
+    {
+      "name": "POST inventory/adjustments ",
+      "passed": true
+    },
+    {
+      "name": "POST inventory/transfers ",
+      "passed": true
+    },
+    {
+      "name": "POST inventory/transfers ",
+      "passed": true
+    },
+    {
+      "name": "Transfer exact idempotent replay",
+      "passed": true
+    },
+    {
+      "name": "Negative stock denied",
+      "passed": true
+    },
+    {
+      "name": "POST suppliers ",
+      "passed": true
+    },
+    {
+      "name": "POST purchase-orders ",
+      "passed": true
+    },
+    {
+      "name": "POST purchase-orders/bac0189c-a431-4a55-8b4d-96142b988e9f/send ",
+      "passed": true
+    },
+    {
+      "name": "POST purchase-orders/bac0189c-a431-4a55-8b4d-96142b988e9f/receipts ",
+      "passed": true
+    },
+    {
+      "name": "Partial receiving status",
+      "passed": true
+    },
+    {
+      "name": "POST purchase-orders/bac0189c-a431-4a55-8b4d-96142b988e9f/receipts ",
+      "passed": true
+    },
+    {
+      "name": "Total receiving status",
+      "passed": true
+    },
+    {
+      "name": "PUT inventory/thresholds ",
+      "passed": true
+    },
+    {
+      "name": "Read /dashboard",
+      "passed": true
+    },
+    {
+      "name": "Read /inventory/alerts",
+      "passed": true
+    },
+    {
+      "name": "Read /audit",
+      "passed": true
+    },
+    {
+      "name": "Read /reports/inventory",
+      "passed": true
+    },
+    {
+      "name": "Read /reports/movements",
+      "passed": true
+    },
+    {
+      "name": "Read /reports/purchase-orders",
+      "passed": true
+    },
+    {
+      "name": "POST imports/products/preview ",
+      "passed": true
+    },
+    {
+      "name": "POST imports/products/confirm ",
+      "passed": true
+    },
+    {
+      "name": "CSV export includes committed product",
+      "passed": true
+    },
+    {
+      "name": "Foreign organization read denied",
+      "passed": true
+    },
+    {
+      "name": "Foreign organization write denied",
+      "passed": true
+    },
+    {
+      "name": "Foreign actual product ID denied",
+      "passed": true
+    },
+    {
+      "name": "Foreign actual order ID denied",
+      "passed": true
+    },
+    {
+      "name": "Cloud QA ledger balances reconcile",
+      "passed": true
+    },
+    {
+      "name": "Expected atomic balances 7 and 8",
+      "passed": true
+    },
+    {
+      "name": "QA logout",
+      "passed": true
+    },
+    {
+      "name": "QA logout",
+      "passed": true
+    }
+  ],
+  "browser": {
+    "executedAt": "2026-10-17T22:05:16.874Z",
+    "base": "https://stockflow-demo-qsb3.onrender.com",
+    "browser": "Chrome extension",
+    "httpsLogin": true,
+    "secureSessionSurvivedRefresh": true,
+    "qaTransferRecorded": true,
+    "balancesAfterTransfer": ["6.000000", "9.000000"],
+    "publicNovaPreserved": true,
+    "responsive": [
+      {
+        "overflow": false,
+        "scrollWidth": 320,
+        "width": 320
+      },
+      {
+        "overflow": false,
+        "scrollWidth": 753,
+        "width": 768
+      },
+      {
+        "overflow": false,
+        "scrollWidth": 1425,
+        "width": 1440
+      }
+    ],
+    "purchaseOrderBrowser": {
+      "id": "02133959-6a41-4f35-83f5-a322309db2b0",
+      "createdSentPartialTotal": true
+    },
+    "reportsViewed": true,
+    "csvDownload": "Server export200 observed in Render logs; local download completion unverified after browser interruption"
+  },
+  "recovery": {
+    "executedAt": "2026-10-17T22:05:25.898Z",
+    "scope": "Actual Neon cloud pg_dump restored into fresh isolated local PostgreSQL18; no provider PITR or cloud failover executed",
+    "counts": {
+      "organizationId": "506fcf52-f7aa-4599-8693-8c2ad0308e94",
+      "products": 40,
+      "categories": 6,
+      "warehouses": 3,
+      "suppliers": 6,
+      "orders": 10,
+      "receipts": 5,
+      "transfers": 6,
+      "movements": 88,
+      "audit": 195,
+      "imports": 1,
+      "memberships": 3
+    },
+    "migrations": 9,
+    "bytes": 199620,
+    "sha256": "05596d180ba59be88fc8e64fcea78def5eecd5ff2d9dacc76618b3060978b109",
+    "durationMs": 26278,
+    "cloudSourcePreserved": true,
+    "temporaryLocalTargetRemoved": true
+  },
+  "warm": {
+    "executedAt": "2026-10-17T22:05:59.995Z",
+    "scope": "Warm HTTP request including full body from local Windows client; not browser paint/LCP",
+    "samples": [
+      {
+        "firstDocumentMs": 337,
+        "loginMs": 1894,
+        "dashboardMs": 265,
+        "inventoryMs": 194,
+        "reportMs": 181
+      },
+      {
+        "firstDocumentMs": 217,
+        "loginMs": 1831,
+        "dashboardMs": 206,
+        "inventoryMs": 185,
+        "reportMs": 193
+      },
+      {
+        "firstDocumentMs": 179,
+        "loginMs": 1843,
+        "dashboardMs": 211,
+        "inventoryMs": 191,
+        "reportMs": 183
+      }
+    ],
+    "cold": "NOT VERIFIED"
+  },
+  "runtime": {
+    "executedAt": "2026-10-17T21:50:58.247Z",
+    "privileges": {
+      "role": "stockflow_runtime",
+      "schema_usage": true,
+      "schema_create": false,
+      "product_read": true,
+      "product_insert": true,
+      "ledger_update": false,
+      "ledger_delete": false,
+      "ledger_truncate": false,
+      "audit_update": false,
+      "migration_read": false
+    },
+    "forbiddenStatementsDenied": 3,
+    "clientTls": {
+      "encrypted": true,
+      "authorized": true,
+      "protocol": "TLSv1.3"
+    },
+    "maxConnections": 901
+  },
+  "screenshot": {
+    "path": "docs/screenshots/public-qa-inventory.jpg",
+    "sourceUrl": "https://stockflow-demo-qsb3.onrender.com",
+    "browser": "Chrome extension",
+    "capturedAt": "2026-10-17T22:05:21.602Z",
+    "sha256": "91ed8ad6a7d75bc5bec5685ac5d62aa7f67b8c519e5e6467550b9bdfe2405a92",
+    "scope": "Raw viewport screenshot of isolated fictional QA inventory, not Nova dataset or local Phase11 capture"
+  }
+}

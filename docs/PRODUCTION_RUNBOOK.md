@@ -1,6 +1,10 @@
 # Public demo operations and recovery
 
-Project: `SC-PROJ-STOCKFLOW`. Prepared 2026-10-17. **Status: PENDING public execution and recovery rehearsal.** Commands below are administrative procedures, not evidence of a completed backup or restore. Use [deployment configuration](DEPLOYMENT.md) and [Phase 12 verification](PHASE12_VERIFICATION.md) for actual provider, region, endpoints, commit and executed results.
+Project: `SC-PROJ-STOCKFLOW`. Updated 2026-10-17. **Status: public demo deployed; actual cloud dump restored into isolated local PostgreSQL. Provider PITR and cloud failover remain unverified.** Commands below are administrative procedures; only the dated [public evidence](PHASE12_PUBLIC_VERIFICATION.md) establishes executed results. Use [deployment configuration](DEPLOYMENT.md) for the actual target.
+
+Current demo: https://stockflow-demo-qsb3.onrender.com. Render service srv-db9uqm7btjjs73d4ruq0; Neon project wandering-snow-13740393, database stockflow_public_demo, both Virginia. Runtime uses stockflow_runtime; owner access stays in private administrator storage. Never use local demo reset against this cloud target.
+
+On this Windows host, Prisma's first IPv6 attempts timed out. An administrative process with connect_timeout=0 and an outer four-minute deadline succeeded without changing network settings. Use Prisma-supported sslmode=require with sslaccept=strict; retain verify-full for pg/libpq. For the executed pg_dump, PGHOSTADDR was resolved to a current public IPv4 address while PGHOST retained the DNS endpoint for certificate checking; an explicit trusted CA bundle was required. Do not pin an old IP permanently, disable TLS checking or copy credentials into command history. If seed stops, inspect exact counts and durable commands before retrying; the initial public continuation completed only missing purchasing/receiving/CSV operations through HTTPS.
 
 ## Diagnose before changing state
 
