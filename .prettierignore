@@ -1,0 +1,10 @@
+node_modules
+dist
+package-lock.json
+apps/api/src/generated
+playwright-report
+test-results
+coverage
+AGENTS.md
+.cache
+.env

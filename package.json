@@ -1,0 +1,52 @@
+{
+  "name": "stockflow",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=24.14.1 <25",
+    "npm": ">=11 <12"
+  },
+  "packageManager": "npm@11.11.0",
+  "scripts": {
+    "start": "node apps/api/dist/server.js",
+    "build:production": "npm run prisma:generate && npm run build",
+    "dev:web": "npm run dev --workspace @stockflow/web",
+    "dev:api": "node --env-file-if-exists=.env node_modules/tsx/dist/cli.mjs watch apps/api/src/server.ts",
+    "db:start": "pwsh -NoProfile -File scripts/database.ps1 start",
+    "db:stop": "pwsh -NoProfile -File scripts/database.ps1 stop",
+    "db:status": "pwsh -NoProfile -File scripts/database.ps1 status",
+    "db:create": "node scripts/database-command.mjs create",
+    "db:migrate": "node scripts/database-command.mjs migrate",
+    "db:verify-clean": "node scripts/database-command.mjs verify-clean",
+    "test:integration": "node scripts/database-command.mjs test",
+    "test:e2e:db": "node scripts/database-command.mjs e2e",
+    "demo:seed": "node --import tsx scripts/demo.mjs seed",
+    "demo:reset": "node --import tsx scripts/demo.mjs reset",
+    "demo:api": "node --import tsx scripts/demo.mjs serve",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "tsc -p tsconfig.tools.json && npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:e2e": "playwright test",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prisma:validate": "npm run prisma:validate --workspace @stockflow/api",
+    "prisma:generate": "npm run prisma:generate --workspace @stockflow/api"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.64.1",
+    "@types/node": "24.19.2",
+    "eslint": "10.13.0",
+    "globals": "17.13.0",
+    "prettier": "3.9.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.2",
+    "vitest": "5.0.5"
+  }
+}

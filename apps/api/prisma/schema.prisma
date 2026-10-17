@@ -1,0 +1,459 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  moduleFormat = "esm"
+  importFileExtension = "js"
+  generatedFileExtension = "ts"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum MembershipRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+model Organization {
+ importJobs ImportJob[]
+ auditEvents AuditEvent[]
+ inventoryThresholds InventoryThreshold[]
+  purchaseReceipts PurchaseReceipt[]
+  id          String       @id @default(uuid()) @db.Uuid
+  name        String       @db.VarChar(200)
+  createdAt   DateTime     @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime     @updatedAt @db.Timestamptz(3)
+  memberships Membership[]
+  sessions Session[]
+  categories Category[]
+  products Product[]
+  warehouses Warehouse[]
+  inventoryBalances InventoryBalance[]
+  inventoryMovements InventoryMovement[]
+  inventoryCommands InventoryCommand[]
+  inventoryTransfers InventoryTransfer[]
+  suppliers Supplier[]
+  purchaseOrders PurchaseOrder[]
+  purchasingCommands PurchasingCommand[]
+}
+
+enum UnitOfMeasure {
+  UNIT
+  KG
+  G
+  L
+  ML
+  M
+  CM
+}
+
+model Category {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  name String @db.VarChar(200)
+  normalizedName String @db.VarChar(200)
+  description String? @db.VarChar(2000)
+  active Boolean @default(true)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  products Product[]
+
+  @@unique([organizationId, normalizedName])
+  @@unique([organizationId, id])
+}
+
+model Product {
+ inventoryThresholds InventoryThreshold[]
+  purchaseReceiptLines PurchaseReceiptLine[]
+  purchaseOrderLines PurchaseOrderLine[]
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  sku String @db.VarChar(64)
+  name String @db.VarChar(200)
+  description String? @db.VarChar(2000)
+  categoryId String? @db.Uuid
+  unitOfMeasure UnitOfMeasure
+  quantityScale Int @default(0)
+  active Boolean @default(true)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  category Category? @relation(fields: [organizationId, categoryId], references: [organizationId, id], onDelete: Restrict)
+  inventoryBalances InventoryBalance[]
+  inventoryMovements InventoryMovement[]
+  inventoryTransfers InventoryTransfer[]
+
+  @@unique([organizationId, sku])
+  @@unique([organizationId, id])
+  @@index([organizationId, categoryId])
+}
+
+model Warehouse {
+ inventoryThresholds InventoryThreshold[]
+  purchaseReceipts PurchaseReceipt[]
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  code String @db.VarChar(32)
+  name String @db.VarChar(200)
+  description String? @db.VarChar(2000)
+  active Boolean @default(true)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  inventoryBalances InventoryBalance[]
+  inventoryMovements InventoryMovement[]
+  outgoingTransfers InventoryTransfer[] @relation("TransferSource")
+  incomingTransfers InventoryTransfer[] @relation("TransferDestination")
+
+  @@unique([organizationId, code])
+  @@unique([organizationId, id])
+}
+
+// Global identity is deliberately tenant-independent; membership grants tenant access.
+// Phase 2 must normalize email before persistence and implement authentication.
+model User {
+ importJobs ImportJob[]
+ auditEvents AuditEvent[]
+  purchaseReceipts PurchaseReceipt[]
+  purchaseOrders PurchaseOrder[]
+  purchasingCommands PurchasingCommand[]
+  id          String       @id @default(uuid()) @db.Uuid
+  email       String       @unique @db.VarChar(254)
+  displayName String       @db.VarChar(200)
+  passwordHash String @db.VarChar(255)
+  createdAt   DateTime     @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime     @updatedAt @db.Timestamptz(3)
+  memberships Membership[]
+  sessions Session[]
+  inventoryMovements InventoryMovement[]
+  inventoryCommands InventoryCommand[]
+  inventoryTransfers InventoryTransfer[]
+}
+
+enum InventoryMovementType {
+  RECEIPT
+  ISSUE
+  ADJUSTMENT_IN
+  ADJUSTMENT_OUT
+  TRANSFER_IN
+  TRANSFER_OUT
+}
+
+enum InventoryCommandType {
+  RECEIPT
+  ISSUE
+  ADJUSTMENT_IN
+  ADJUSTMENT_OUT
+  TRANSFER
+}
+
+model InventoryBalance {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  productId String @db.Uuid
+  warehouseId String @db.Uuid
+  quantity Decimal @default(0) @db.Decimal(20, 6)
+  version BigInt @default(0)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  product Product @relation(fields: [organizationId, productId], references: [organizationId, id], onDelete: Restrict)
+  warehouse Warehouse @relation(fields: [organizationId, warehouseId], references: [organizationId, id], onDelete: Restrict)
+  movements InventoryMovement[]
+
+  @@unique([organizationId, productId, warehouseId])
+}
+
+model InventoryMovement {
+  purchaseReceiptLineId String? @unique @db.Uuid
+  purchaseReceiptLine PurchaseReceiptLine? @relation(fields:[organizationId,purchaseReceiptLineId],references:[organizationId,id],onDelete:Restrict)
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  productId String @db.Uuid
+  warehouseId String @db.Uuid
+  type InventoryMovementType
+  quantity Decimal @db.Decimal(20, 6)
+  previousBalance Decimal @db.Decimal(20, 6)
+  resultingBalance Decimal @db.Decimal(20, 6)
+  balanceVersion BigInt
+  actorId String @db.Uuid
+  commandId String @db.Uuid
+  transferId String? @db.Uuid
+  reason String? @db.VarChar(500)
+  referenceType String? @db.VarChar(64)
+  referenceId String? @db.VarChar(128)
+  idempotencyKey String @db.VarChar(128)
+  correlationKey String @db.VarChar(128)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  product Product @relation(fields: [organizationId, productId], references: [organizationId, id], onDelete: Restrict)
+  warehouse Warehouse @relation(fields: [organizationId, warehouseId], references: [organizationId, id], onDelete: Restrict)
+  balance InventoryBalance @relation(fields: [organizationId, productId, warehouseId], references: [organizationId, productId, warehouseId], onDelete: Restrict)
+  actor User @relation(fields: [actorId], references: [id], onDelete: Restrict)
+  command InventoryCommand @relation(fields: [organizationId, commandId], references: [organizationId, id], onDelete: Restrict)
+
+  @@unique([organizationId, productId, warehouseId, balanceVersion])
+  transfer InventoryTransfer? @relation(fields: [organizationId, transferId], references: [organizationId, id], onDelete: Restrict)
+
+  @@unique([commandId, type])
+  @@index([organizationId, createdAt, id])
+  @@unique([organizationId,purchaseReceiptLineId])
+}
+
+model InventoryCommand {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  type InventoryCommandType
+  key String @db.VarChar(128)
+  payloadHash String @db.Char(64)
+  actorId String @db.Uuid
+  response Json?
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  actor User @relation(fields: [actorId], references: [id], onDelete: Restrict)
+  movements InventoryMovement[]
+  transfer InventoryTransfer?
+
+  @@unique([organizationId, type, key])
+  @@unique([organizationId, id])
+}
+
+model Session {
+  id String @id @default(uuid()) @db.Uuid
+  tokenHash String @unique @db.Char(64)
+  csrfToken String @db.VarChar(64)
+  userId String @db.Uuid
+  organizationId String @db.Uuid
+  expiresAt DateTime @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  membership Membership @relation(fields: [organizationId, userId], references: [organizationId, userId], onDelete: Cascade)
+
+  @@index([userId, organizationId])
+  @@index([expiresAt])
+}
+
+model Membership {
+  id             String         @id @default(uuid()) @db.Uuid
+  organizationId String         @db.Uuid
+  userId         String         @db.Uuid
+  role           MembershipRole
+  createdAt      DateTime       @default(now()) @db.Timestamptz(3)
+  updatedAt      DateTime       @updatedAt @db.Timestamptz(3)
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  user           User           @relation(fields: [userId], references: [id], onDelete: Restrict)
+  sessions Session[]
+
+  @@unique([organizationId, userId])
+  @@index([userId])
+}
+
+model InventoryTransfer {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  productId String @db.Uuid
+  sourceWarehouseId String @db.Uuid
+  destinationWarehouseId String @db.Uuid
+  quantity Decimal @db.Decimal(20, 6)
+  actorId String @db.Uuid
+  commandId String @db.Uuid
+  idempotencyKey String @db.VarChar(128)
+  reason String? @db.VarChar(500)
+  referenceType String? @db.VarChar(64)
+  referenceId String? @db.VarChar(128)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  product Product @relation(fields: [organizationId, productId], references: [organizationId, id], onDelete: Restrict)
+  sourceWarehouse Warehouse @relation("TransferSource", fields: [organizationId, sourceWarehouseId], references: [organizationId, id], onDelete: Restrict)
+  destinationWarehouse Warehouse @relation("TransferDestination", fields: [organizationId, destinationWarehouseId], references: [organizationId, id], onDelete: Restrict)
+  actor User @relation(fields: [actorId], references: [id], onDelete: Restrict)
+  command InventoryCommand @relation(fields: [organizationId, commandId], references: [organizationId, id], onDelete: Restrict)
+  movements InventoryMovement[]
+
+  @@unique([organizationId, id])
+  @@unique([commandId])
+  @@unique([organizationId, commandId])
+  @@index([organizationId, createdAt, id])
+}
+
+
+enum PurchaseOrderStatus {
+  PARTIALLY_RECEIVED
+  RECEIVED
+  DRAFT
+  SENT
+  CANCELLED
+}
+
+enum PurchasingCommandType {
+  RECEIVE
+  CREATE
+  SEND
+  CANCEL
+}
+
+model Supplier {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  name String @db.VarChar(200)
+  legalName String? @db.VarChar(200)
+  taxId String? @db.VarChar(100)
+  email String? @db.VarChar(254)
+  phone String? @db.VarChar(100)
+  notes String? @db.VarChar(2000)
+  active Boolean @default(true)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  organization Organization @relation(fields:[organizationId],references:[id],onDelete:Restrict)
+  purchaseOrders PurchaseOrder[]
+  @@unique([organizationId,id])
+  @@unique([organizationId,taxId])
+}
+
+model PurchaseOrder {
+  receipts PurchaseReceipt[]
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  supplierId String @db.Uuid
+  creatorId String @db.Uuid
+  status PurchaseOrderStatus @default(DRAFT)
+  notes String? @db.VarChar(2000)
+  version Int @default(0)
+  sentAt DateTime? @db.Timestamptz(3)
+  cancelledAt DateTime? @db.Timestamptz(3)
+  cancellationReason String? @db.VarChar(500)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  organization Organization @relation(fields:[organizationId],references:[id],onDelete:Restrict)
+  supplier Supplier @relation(fields:[organizationId,supplierId],references:[organizationId,id],onDelete:Restrict)
+  creator User @relation(fields:[creatorId],references:[id],onDelete:Restrict)
+  lines PurchaseOrderLine[]
+  @@unique([organizationId,id])
+  @@index([organizationId,createdAt,id])
+}
+
+model PurchaseOrderLine {
+  receiptLines PurchaseReceiptLine[]
+  receivedQuantity Decimal @default(0) @db.Decimal(20,6)
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  purchaseOrderId String @db.Uuid
+  productId String @db.Uuid
+  orderedQuantity Decimal @db.Decimal(20,6)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  purchaseOrder PurchaseOrder @relation(fields:[organizationId,purchaseOrderId],references:[organizationId,id],onDelete:Restrict)
+  product Product @relation(fields:[organizationId,productId],references:[organizationId,id],onDelete:Restrict)
+  @@unique([organizationId,purchaseOrderId,productId])
+  @@index([organizationId,productId])
+  @@unique([organizationId,id])
+}
+
+model PurchasingCommand {
+  receipt PurchaseReceipt?
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  type PurchasingCommandType
+  key String @db.VarChar(128)
+  payloadHash String @db.Char(64)
+  actorId String @db.Uuid
+  response Json
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  organization Organization @relation(fields:[organizationId],references:[id],onDelete:Restrict)
+  actor User @relation(fields:[actorId],references:[id],onDelete:Restrict)
+  @@unique([organizationId,type,key])
+  @@unique([organizationId,id])
+}
+
+model PurchaseReceipt {
+ id String @id @default(uuid()) @db.Uuid
+ organizationId String @db.Uuid
+ purchaseOrderId String @db.Uuid
+ warehouseId String @db.Uuid
+ actorId String @db.Uuid
+ commandId String @unique @db.Uuid
+ idempotencyKey String @db.VarChar(128)
+ createdAt DateTime @default(now()) @db.Timestamptz(3)
+ organization Organization @relation(fields:[organizationId],references:[id],onDelete:Restrict)
+ purchaseOrder PurchaseOrder @relation(fields:[organizationId,purchaseOrderId],references:[organizationId,id],onDelete:Restrict)
+ warehouse Warehouse @relation(fields:[organizationId,warehouseId],references:[organizationId,id],onDelete:Restrict)
+ actor User @relation(fields:[actorId],references:[id],onDelete:Restrict)
+ command PurchasingCommand @relation(fields:[organizationId,commandId],references:[organizationId,id],onDelete:Restrict)
+ lines PurchaseReceiptLine[]
+ @@unique([organizationId,id])
+ @@unique([organizationId,commandId])
+ @@index([organizationId,purchaseOrderId,createdAt,id])
+}
+model PurchaseReceiptLine {
+ id String @id @default(uuid()) @db.Uuid
+ organizationId String @db.Uuid
+ receiptId String @db.Uuid
+ purchaseOrderLineId String @db.Uuid
+ productId String @db.Uuid
+ receivedQuantity Decimal @db.Decimal(20,6)
+ createdAt DateTime @default(now()) @db.Timestamptz(3)
+ receipt PurchaseReceipt @relation(fields:[organizationId,receiptId],references:[organizationId,id],onDelete:Restrict)
+ purchaseOrderLine PurchaseOrderLine @relation(fields:[organizationId,purchaseOrderLineId],references:[organizationId,id],onDelete:Restrict)
+ product Product @relation(fields:[organizationId,productId],references:[organizationId,id],onDelete:Restrict)
+ inventoryMovement InventoryMovement?
+ @@unique([organizationId,id])
+ @@unique([organizationId,receiptId,purchaseOrderLineId])
+ @@index([organizationId,purchaseOrderLineId])
+}
+
+model InventoryThreshold {
+ id String @id @default(uuid()) @db.Uuid
+ organizationId String @db.Uuid
+ productId String @db.Uuid
+ warehouseId String @db.Uuid
+ minimumQuantity Decimal @db.Decimal(20,6)
+ createdAt DateTime @default(now()) @db.Timestamptz(3)
+ updatedAt DateTime @updatedAt @db.Timestamptz(3)
+ organization Organization @relation(fields:[organizationId],references:[id],onDelete:Restrict)
+ product Product @relation(fields:[organizationId,productId],references:[organizationId,id],onDelete:Restrict)
+ warehouse Warehouse @relation(fields:[organizationId,warehouseId],references:[organizationId,id],onDelete:Restrict)
+ @@unique([organizationId,productId,warehouseId])
+}
+model AuditEvent {
+ id String @id @default(uuid()) @db.Uuid
+ organizationId String @db.Uuid
+ actorId String? @db.Uuid
+ action String @db.VarChar(64)
+ entityType String @db.VarChar(64)
+ entityId String @db.Uuid
+ previousState Json?
+ newState Json?
+ metadata Json
+ correlationKey String? @db.VarChar(128)
+ createdAt DateTime @default(now()) @db.Timestamptz(3)
+ organization Organization @relation(fields:[organizationId],references:[id],onDelete:Restrict)
+ actor User? @relation(fields:[actorId],references:[id],onDelete:Restrict)
+ @@index([organizationId,createdAt,id])
+ @@index([organizationId,entityType,entityId,createdAt,id])
+}
+
+model ImportJob {
+ id String @id @default(uuid()) @db.Uuid
+ organizationId String @db.Uuid
+ actorId String @db.Uuid
+ type String @db.VarChar(32)
+ status String @db.VarChar(32)
+ csvHash String @db.Char(64)
+ totalRows Int
+ validRows Int
+ invalidRows Int
+ createdRows Int
+ updatedRows Int
+ skippedRows Int
+ failedRows Int
+ createdAt DateTime @default(now()) @db.Timestamptz(3)
+ confirmedAt DateTime @db.Timestamptz(3)
+ organization Organization @relation(fields:[organizationId],references:[id],onDelete:Restrict)
+ actor User @relation(fields:[actorId],references:[id],onDelete:Restrict)
+ @@unique([organizationId,id])
+ @@index([organizationId,createdAt,id])
+}

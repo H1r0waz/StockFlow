@@ -1,0 +1,147 @@
+{
+  "generatedAt": "2026-10-17T20:54:25.081Z",
+  "baseRevision": "8f0719cd0a680da6a1475368a2542e226f9c2dce",
+  "source": "Phase 11 working tree; real local Chromium screenshots against isolated stockflow_demo",
+  "scenario": "Distribuidora Nova · Fictional demo",
+  "fictionalOnly": true,
+  "account": "owner@nova.example.test (fictional local-only account)",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "screenshots": [
+    {
+      "file": "login.png",
+      "view": "Local login before entering fictional credentials",
+      "sha256": "b26946761d8b4f7843e0bf6ce8b321e2b28c5c870afa154bd694673586ff959a"
+    },
+    {
+      "file": "dashboard.png",
+      "view": "Fictional distribution operations dashboard",
+      "sha256": "fd50390e7e1ae4a3342c57aa77af21ad867529f8a5065f2dad08187f09f2d5e3"
+    },
+    {
+      "file": "inventory.png",
+      "view": "Current stock and immutable movement history filtered to fictional SKU NOVA-017",
+      "sha256": "4819614d8770c7ac8841ab70b34ae6a363a3910517c40028ee7df28f9458bfca"
+    },
+    {
+      "file": "purchase-order.png",
+      "view": "Partially received purchasing order and pending lines",
+      "sha256": "f0c0abee9478e76507ae4dd8773673d44a9721fdecc86284874187e532fd71fe"
+    },
+    {
+      "file": "receiving.png",
+      "view": "Completed purchase receipt history and linked stock",
+      "sha256": "adb3de9c52d0cf6ebfa008403d32484b9118d4f8379acd4d5b78671602cf450b"
+    },
+    {
+      "file": "audit.png",
+      "view": "Readable receipt audit with technical references collapsed",
+      "sha256": "c8662d66a73ff373e7a69ec906dbcd79d939572e236794abcb694d738135d656"
+    },
+    {
+      "file": "imports.png",
+      "view": "Read-only catalog preview; no import is confirmed for capture",
+      "sha256": "40a64d339eee6a61a8905943650d32b37421df97984c4eebae083d5345317b35"
+    },
+    {
+      "file": "reports.png",
+      "view": "Bounded current-stock report and explicit CSV export",
+      "sha256": "477ded3f8c55e3913ffd1c71799a0bd3bcc4d1814711e529b622e74b7ef21198"
+    }
+  ],
+  "responsive": [
+    {
+      "width": 320,
+      "view": "Dashboard",
+      "documentFits": true
+    },
+    {
+      "width": 320,
+      "view": "Inventory",
+      "documentFits": true
+    },
+    {
+      "width": 320,
+      "view": "Purchasing",
+      "documentFits": true
+    },
+    {
+      "width": 320,
+      "view": "Audit",
+      "documentFits": true
+    },
+    {
+      "width": 320,
+      "view": "Imports",
+      "documentFits": true
+    },
+    {
+      "width": 320,
+      "view": "Reports",
+      "documentFits": true
+    },
+    {
+      "width": 768,
+      "view": "Dashboard",
+      "documentFits": true
+    },
+    {
+      "width": 768,
+      "view": "Inventory",
+      "documentFits": true
+    },
+    {
+      "width": 768,
+      "view": "Purchasing",
+      "documentFits": true
+    },
+    {
+      "width": 768,
+      "view": "Audit",
+      "documentFits": true
+    },
+    {
+      "width": 768,
+      "view": "Imports",
+      "documentFits": true
+    },
+    {
+      "width": 768,
+      "view": "Reports",
+      "documentFits": true
+    },
+    {
+      "width": 1440,
+      "view": "Dashboard",
+      "documentFits": true
+    },
+    {
+      "width": 1440,
+      "view": "Inventory",
+      "documentFits": true
+    },
+    {
+      "width": 1440,
+      "view": "Purchasing",
+      "documentFits": true
+    },
+    {
+      "width": 1440,
+      "view": "Audit",
+      "documentFits": true
+    },
+    {
+      "width": 1440,
+      "view": "Imports",
+      "documentFits": true
+    },
+    {
+      "width": 1440,
+      "view": "Reports",
+      "documentFits": true
+    }
+  ],
+  "limits": "No public deployment or production data. Raw screenshots; no image synthesis or editing."
+}
